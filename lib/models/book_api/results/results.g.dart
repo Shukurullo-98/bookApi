@@ -8,13 +8,16 @@ part of 'results.dart';
 
 Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       bestsellersDate: json['bestsellers_date'] as String? ?? '',
-      books: json['books'] as String? ?? '',
-      corrections: json['corrections'] as String? ?? '',
+      books: (json['books'] as List<dynamic>?)
+              ?.map((e) => Books.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      corrections: json['corrections'] as List<dynamic>? ?? [],
       displayName: json['display_name'] as String? ?? '',
       listName: json['list_name'] as String? ?? '',
       listNameEncoded: json['list_name_encoded'] as String? ?? '',
       nextPublishedDate: json['next_published_date'] as String? ?? '',
-      normalListEndsAt: json['normal_list_ends_at'] as String? ?? '',
+      normalListEndsAt: json['normal_list_ends_at'] as int? ?? 0,
       previousPublishedDate: json['previous_published_date'] as String? ?? '',
       publishedDate: json['published_date'] as String? ?? '',
       publishedDateDescription:

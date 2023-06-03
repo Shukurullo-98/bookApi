@@ -1,3 +1,4 @@
+import 'package:book_api/models/book_api/books/books.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'results.g.dart';
@@ -28,17 +29,17 @@ class Result {
   @JsonKey(defaultValue: '', name: 'display_name')
   String displayName;
 
-  @JsonKey(defaultValue: '', name: 'normal_list_ends_at')
-  String normalListEndsAt;
+  @JsonKey(defaultValue: 0, name: 'normal_list_ends_at')
+  int normalListEndsAt;
 
   @JsonKey(defaultValue: '', name: 'updated')
   String updated;
 
-  @JsonKey(defaultValue: '', name: 'books')
-  String books;
+  @JsonKey(defaultValue: [], name: 'books')
+  List<Books> books;
 
-  @JsonKey(defaultValue: '', name: 'corrections')
-  String corrections;
+  @JsonKey(defaultValue: [], name: 'corrections')
+  List<dynamic> corrections;
 
   Result({
     required this.bestsellersDate,

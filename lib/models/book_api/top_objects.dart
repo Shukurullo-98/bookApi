@@ -12,6 +12,9 @@ class TopObjects {
   @JsonKey(defaultValue: '', name: 'copyright')
   String copyright;
 
+  @JsonKey(defaultValue: 0, name: 'num_results')
+  int numResults;
+
   @JsonKey(defaultValue: '', name: 'last_modified')
   String lastModified;
 
@@ -21,6 +24,7 @@ class TopObjects {
   TopObjects({
     required this.status,
     required this.copyright,
+    required this.numResults,
     required this.lastModified,
     required this.results,
 });
