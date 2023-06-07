@@ -1,8 +1,7 @@
 import 'package:book_api/models/book_api/top_objects.dart';
 import 'package:book_api/repository/repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/link.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -31,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (BuildContext context, index) {
                     var item = data.results.books[index];
                     Uri url = Uri.parse(item.buyLinks[0].url);
+                    Uri url2 = Uri.parse(item.buyLinks[1].url);
                     return Container(
                       margin: const EdgeInsets.all(15),
                       padding: const EdgeInsets.all(15),
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               ElevatedButton(
                                   onPressed: () {
-                                    _showMyDialog(context, url);
+                                    _showMyDialog(context, url, url2);
                                   },
                                   child: Text("Buy"))
                             ],
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future<void> _showMyDialog(context, Uri url) async {
+Future<void> _showMyDialog(context, Uri url, Uri url2) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -104,19 +104,27 @@ Future<void> _showMyDialog(context, Uri url) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Container(
-                child: Linkify(text: 'Amazon',
-                  onOpen: (link)=> print(url),
-
-                ),
-              ),
-              Text('Would you like to approve of this message?'),
+              Link(
+                  target: LinkTarget.blank,
+                  uri: url,
+                  builder: (context, followLink) {
+                    return ElevatedButton(
+                        onPressed: followLink, child: const Text("Amazon shop"));
+                  }),
+              const SizedBox(height: 10,),
+              Link(
+                  target: LinkTarget.blank,
+                  uri: url2,
+                  builder: (context, followLink) {
+                    return ElevatedButton(
+                        onPressed: followLink, child: const Text("Apple shop"));
+                  }),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Approve'),
+            child: const Text('Close'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -126,4 +134,3 @@ Future<void> _showMyDialog(context, Uri url) async {
     },
   );
 }
-
